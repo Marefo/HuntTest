@@ -1,4 +1,4 @@
-﻿using _CodeBase.Merge;
+﻿using _CodeBase.MergeMode;
 using UnityEngine;
 using Zenject;
 

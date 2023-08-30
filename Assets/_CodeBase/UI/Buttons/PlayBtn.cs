@@ -1,6 +1,6 @@
 ﻿using System;
 using _CodeBase.Infrastructure.Services;
-using _CodeBase.Merge;
+using _CodeBase.MergeMode;
 using Zenject;
 
 namespace _CodeBase.UI.Buttons
@@ -28,8 +28,8 @@ namespace _CodeBase.UI.Buttons
 
     private void UnSubscribeEvents()
     {
-      _field.HuntingGroupBecomeEmpty += Disable;
-      _field.HuntingGroupFilled += Enable;
+      _field.HuntingGroupBecomeEmpty -= Disable;
+      _field.HuntingGroupFilled -= Enable;
     }
     
     protected override void OnClick()
