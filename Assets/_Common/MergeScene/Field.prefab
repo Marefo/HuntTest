@@ -338,6 +338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8953a7a890a048efbfe6993c5c939bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mergeVfx: {fileID: 9083162121356442576, guid: e96242617a4ab7d4c83b2c45967de269, type: 3}
   _animalSpawner: {fileID: -4989262358650334526}
   _cells:
   - {fileID: 25428757825611053}

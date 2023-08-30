@@ -48,6 +48,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <AnimalPoint>k__BackingField: {fileID: 1311722125101876536}
+  _mesh: {fileID: 5877620151498349419}
+  _highlightMaterial: {fileID: 2100000, guid: b093983ebe7efc046982315e99640f66, type: 2}
 --- !u!65 &6557069141428010920
 BoxCollider:
   m_ObjectHideFlags: 0

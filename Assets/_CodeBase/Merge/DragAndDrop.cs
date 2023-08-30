@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using _CodeBase.Infrastructure.Services;
 using _CodeBase.Merge.AnimalCode;
 using _CodeBase.Merge.AnimalCode.StaticData;
@@ -20,8 +21,9 @@ namespace _CodeBase.Merge
     private Camera _mainCamera;
     private bool _isTouching;
     private Cell _draggingStartCell;
-    private Animal _draggingAnimal;
-    
+    private MergeAnimal _draggingAnimal;
+    private List<Cell> _cellsWithSameLvl = new List<Cell>();
+
     [Inject]
     private void Construct(InputService inputService, Field field)
     {
@@ -90,6 +92,10 @@ namespace _CodeBase.Merge
       _draggingStartCell.ResetAnimal();
       _draggingAnimal.transform.SetParent(_dragPointObj);
       _draggingAnimal.transform.localPosition = Vector3.zero + _draggingAnimal.Offset;
+      _draggingAnimal.OnStartDragging();
+
+      _cellsWithSameLvl = _field.GetCellsByLvl(_draggingAnimal.Lvl);
+      _cellsWithSameLvl.ForEach(cellWithSameLvl => cellWithSameLvl.EnableHighlight());
     }
 
     private void HandleAnimalDropping()
@@ -105,6 +111,9 @@ namespace _CodeBase.Merge
         ResetDraggingAnimalToDefaultCell();
       }
 
+      _cellsWithSameLvl.ForEach(cellWithSameLvl => cellWithSameLvl.DisableHighlight());
+      _cellsWithSameLvl.Clear();
+      _draggingAnimal.OnFinishDragging();
       _draggingStartCell = null;
       _draggingAnimal = null;
     }

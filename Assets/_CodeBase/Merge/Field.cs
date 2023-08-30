@@ -10,7 +10,9 @@ namespace _CodeBase.Merge
   {
     public bool IsAddAnimalPossible => _cellsWithoutAnimal.Count > 0;
 
-    [SerializeField] private AnimalSpawner _animalSpawner;
+    [SerializeField] private ParticleSystem _mergeVfx;
+    [Space(10)]
+    [SerializeField] private MergeAnimalSpawner _animalSpawner;
     [Space(10)]
     [SerializeField] private List<Cell> _cells;
 
@@ -23,14 +25,17 @@ namespace _CodeBase.Merge
       _animalSpawner.SpawnAnimal(cell, 1);
     }
 
-    public void MergeAnimals(Animal draggingAnimal, Cell targetCell)
+    public void MergeAnimals(MergeAnimal draggingAnimal, Cell targetCell)
     {
       int targetLvl = targetCell.Animal.Lvl + 1;
       Destroy(draggingAnimal.gameObject);
       Destroy(targetCell.Animal.gameObject);
       targetCell.ResetAnimal();
+      Instantiate(_mergeVfx, targetCell.AnimalPoint.position + _mergeVfx.transform.position, Quaternion.identity);
       _animalSpawner.SpawnAnimal(targetCell, targetLvl);
     }
+
+    public List<Cell> GetCellsByLvl(int lvl) => _cells.Where(cell => cell.HasAnimal && cell.Animal.Lvl == lvl).ToList();
 
     private Cell GetCellWithoutAnimal() => _cellsWithoutAnimal.First();
   }

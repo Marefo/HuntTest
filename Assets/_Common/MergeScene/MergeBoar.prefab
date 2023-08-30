@@ -1496,8 +1496,8 @@ Animator:
   m_GameObject: {fileID: 5364902633706160619}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 59dc7eb140be69548819cbbdef4c5a29, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 1
+  m_Controller: {fileID: 9100000, guid: 8799c9574ef474a41b8edcc6f1421496, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
@@ -1946,7 +1946,7 @@ GameObject:
   - component: {fileID: 6573203073187926731}
   - component: {fileID: 6573203073187926730}
   m_Layer: 0
-  m_Name: Boar
+  m_Name: MergeBoar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1980,3 +1980,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184ac70cfd114d50a468f04c1e1e97bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animator: {fileID: 5364902633696686635}
+  _mesh: {fileID: 5364902633700953323}
+  _highlightMaterial: {fileID: 2100000, guid: 1a31c7a81f45cca4fb8af3bafabc40db, type: 2}

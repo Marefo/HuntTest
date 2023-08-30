@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f7d139f5e6a3c9c44a5835eca8271951, type: 2}
+    - target: {fileID: 834018423877614444, guid: 349029cee9a7ff94f888899c976d9b0a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e3ebb8baed7533741aad58c0743d674c, type: 2}
     - target: {fileID: 834018423885124740, guid: 349029cee9a7ff94f888899c976d9b0a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.47
@@ -25,8 +29,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3410709938421055689, guid: 349029cee9a7ff94f888899c976d9b0a, type: 3}
       propertyPath: m_Name
-      value: BlackFox
+      value: MergeBlackFox
       objectReference: {fileID: 0}
+    - target: {fileID: 3410709938421055694, guid: 349029cee9a7ff94f888899c976d9b0a, type: 3}
+      propertyPath: _highlightMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: e42cf7e681a477447925f5651ba0ad9b, type: 2}
     - target: {fileID: 3410709938421055695, guid: 349029cee9a7ff94f888899c976d9b0a, type: 3}
       propertyPath: m_RootOrder
       value: 0
