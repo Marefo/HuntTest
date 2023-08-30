@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using _CodeBase.Infrastructure.Services;
 using _CodeBase.Merge.AnimalCode;
 using _CodeBase.Merge.AnimalCode.StaticData;
@@ -89,27 +90,30 @@ namespace _CodeBase.Merge
       _draggingStartCell = cell;
       _draggingAnimal = cell.Animal;
       
-      _draggingStartCell.ResetAnimal();
       _draggingAnimal.transform.SetParent(_dragPointObj);
       _draggingAnimal.transform.localPosition = Vector3.zero + _draggingAnimal.Offset;
       _draggingAnimal.OnStartDragging();
+      
+      HighlightCellsToMerge();
+    }
 
-      _cellsWithSameLvl = _field.GetCellsByLvl(_draggingAnimal.Lvl);
+    private void HighlightCellsToMerge()
+    {
+      if(_draggingAnimal.Lvl == _animalsData.MaxAnimalLvl) return;
+      _cellsWithSameLvl = _field.GetCellsByLvl(_draggingAnimal.Lvl)
+        .Where(cellWithSameLvl => cellWithSameLvl != _draggingStartCell).ToList();
       _cellsWithSameLvl.ForEach(cellWithSameLvl => cellWithSameLvl.EnableHighlight());
     }
 
     private void HandleAnimalDropping()
     {
       Cell cell = TryHitCell();
+      _draggingStartCell.ResetAnimal();
 
       if (cell != null)
-      {
         HandleAnimalDroppingOnCell(cell);
-      }
       else
-      {
         ResetDraggingAnimalToDefaultCell();
-      }
 
       _cellsWithSameLvl.ForEach(cellWithSameLvl => cellWithSameLvl.DisableHighlight());
       _cellsWithSameLvl.Clear();

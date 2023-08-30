@@ -6,9 +6,13 @@ namespace _CodeBase.Merge
 {
   public class Cell : MonoBehaviour
   {
+    public event Action AddedAnimal;
+    public event Action RemovedAnimal;
+    
     public bool HasAnimal => Animal != null;
     public MergeAnimal Animal { get; private set; }
     
+    [field: SerializeField] public bool IsHuntingGroup { get; private set; }
     [field: SerializeField] public Transform AnimalPoint { get; private set; }
     [field: Space(10)] 
     [SerializeField] private MeshRenderer _mesh;
@@ -22,11 +26,13 @@ namespace _CodeBase.Merge
     {
       Animal = animal;
       ResetAnimalPosition();
+      AddedAnimal?.Invoke();
     }
 
     public void ResetAnimal()
     {
       Animal = null;
+      RemovedAnimal?.Invoke();
     }
 
     public void EnableHighlight() => _mesh.material = _highlightMaterial;

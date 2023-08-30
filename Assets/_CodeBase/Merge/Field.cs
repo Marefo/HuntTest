@@ -8,6 +8,9 @@ namespace _CodeBase.Merge
 {
   public class Field : MonoBehaviour
   {
+    public event Action HuntingGroupBecomeEmpty;
+    public event Action HuntingGroupFilled;
+    
     public bool IsAddAnimalPossible => _cellsWithoutAnimal.Count > 0;
 
     [SerializeField] private ParticleSystem _mergeVfx;
@@ -17,6 +20,13 @@ namespace _CodeBase.Merge
     [SerializeField] private List<Cell> _cells;
 
     private List<Cell> _cellsWithoutAnimal => _cells.Where(cell => cell.HasAnimal == false).ToList();
+    private List<Cell> _huntingGroupCells => _cells.Where(cell => cell.IsHuntingGroup).ToList();
+
+    private void Awake() => _huntingGroupCells.ForEach(SubscribeToCellEvents);
+
+    private void Start() => _animalSpawner.SpawnAnimal(GetCellWithoutAnimal(), 1);
+
+    private void OnDestroy() => _huntingGroupCells.ForEach(UnSubscribeFromCellEvents);
 
     public void AddAnimal()
     {
@@ -38,5 +48,27 @@ namespace _CodeBase.Merge
     public List<Cell> GetCellsByLvl(int lvl) => _cells.Where(cell => cell.HasAnimal && cell.Animal.Lvl == lvl).ToList();
 
     private Cell GetCellWithoutAnimal() => _cellsWithoutAnimal.First();
+
+    private void SubscribeToCellEvents(Cell cell)
+    {
+      cell.AddedAnimal += CheckForHuntingGroupState;
+      cell.RemovedAnimal += CheckForHuntingGroupState;
+    }
+    
+    private void UnSubscribeFromCellEvents(Cell cell)
+    {
+      cell.AddedAnimal -= CheckForHuntingGroupState;
+      cell.RemovedAnimal -= CheckForHuntingGroupState;
+    }
+    
+    private void CheckForHuntingGroupState()
+    {
+      bool isAllHuntingGroupCellsEmpty = _huntingGroupCells.Count(cell => cell.IsHuntingGroup && cell.HasAnimal) == 0;
+
+      if (isAllHuntingGroupCellsEmpty == false) 
+        HuntingGroupFilled?.Invoke();
+      else
+        HuntingGroupBecomeEmpty?.Invoke();
+    }
   }
 }
