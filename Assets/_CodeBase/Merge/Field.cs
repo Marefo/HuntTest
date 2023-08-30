@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _CodeBase.Infrastructure.Services;
 using _CodeBase.Merge.AnimalCode;
+using _CodeBase.Merge.StaticData;
+using NaughtyAttributes;
 using UnityEngine;
+using Zenject;
 
 namespace _CodeBase.Merge
 {
@@ -22,9 +26,29 @@ namespace _CodeBase.Merge
     private List<Cell> _cellsWithoutAnimal => _cells.Where(cell => cell.HasAnimal == false).ToList();
     private List<Cell> _huntingGroupCells => _cells.Where(cell => cell.IsHuntingGroup).ToList();
 
+    private SavesService _savesService;
+
+    [Inject]
+    private void Construct(SavesService savesService)
+    {
+      _savesService = savesService;
+    }
+    
     private void Awake() => _huntingGroupCells.ForEach(SubscribeToCellEvents);
 
-    private void Start() => _animalSpawner.SpawnAnimal(GetCellWithoutAnimal(), 1);
+    private void Start()
+    {
+      bool hasSaves = LoadSaves();
+      
+      if(hasSaves == false) 
+        _animalSpawner.SpawnAnimal(GetCellWithoutAnimal(), 1);
+    }
+
+    private void OnApplicationFocus(bool hasFocus)
+    {
+      if(hasFocus) return;
+      Save();
+    }
 
     private void OnDestroy() => _huntingGroupCells.ForEach(UnSubscribeFromCellEvents);
 
@@ -69,6 +93,38 @@ namespace _CodeBase.Merge
         HuntingGroupFilled?.Invoke();
       else
         HuntingGroupBecomeEmpty?.Invoke();
+    }
+
+    [Button()]
+    public void Save()
+    {
+      List<CellData> cellsData = new List<CellData>();
+
+      foreach (Cell cell in _cells)
+      {
+        cellsData.Add(new CellData(cell.IsHuntingGroup, cell.HasAnimal, cell.HasAnimal ? cell.Animal.Lvl : 0));
+      }
+
+      FieldData fieldData = new FieldData(cellsData);
+      _savesService.Save(fieldData, _savesService.MergeFieldDataFileName);
+    }
+
+    private bool LoadSaves()
+    {
+      FieldData fieldData = _savesService.Load<FieldData>(_savesService.MergeFieldDataFileName);
+      
+      if (fieldData == null) return false;
+
+      for (int i = 0; i < _cells.Count; i++)
+      {
+        Cell currentCell = _cells[i];
+        CellData savedCell = fieldData.Cells[i];
+        
+        if(savedCell.HasAnimal)
+          _animalSpawner.SpawnAnimal(currentCell, savedCell.AnimalLvl);
+      }
+
+      return true;
     }
   }
 }

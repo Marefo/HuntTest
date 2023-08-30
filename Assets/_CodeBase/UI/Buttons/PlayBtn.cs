@@ -32,6 +32,10 @@ namespace _CodeBase.UI.Buttons
       _field.HuntingGroupFilled += Enable;
     }
     
-    protected override void OnClick() => _sceneService.LoadScene(_sceneService.HuntSceneName);
+    protected override void OnClick()
+    {
+      _field.Save();
+      _sceneService.LoadScene(_sceneService.HuntSceneName);
+    }
   }
 }
