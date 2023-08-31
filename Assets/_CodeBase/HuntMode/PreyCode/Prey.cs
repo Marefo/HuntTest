@@ -1,6 +1,9 @@
 ﻿using System;
 using _CodeBase.HuntMode.Settings;
 using _CodeBase.IndicatorCode;
+using _CodeBase.Logic;
+using DG.Tweening;
+using NaughtyAttributes;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +14,9 @@ namespace _CodeBase.HuntMode.PreyCode
     [SerializeField] private int _startDistance;
     [SerializeField] private AnimalPathFollower _follower;
     [SerializeField] private Health _health; 
+    [SerializeField] private AnimalAnimator _animalAnimator;
+    [Space(10)]
+    [SerializeField] private ParticleSystem _deathVfx;
     [Space(10)]
     [SerializeField] private HuntGlobalAnimalSettings _settings;
 
@@ -39,8 +45,16 @@ namespace _CodeBase.HuntMode.PreyCode
       path.Take();
     }
 
+    [Button()]
     private void Die()
     {
+      _animalAnimator.PlayDeath();
+      DOVirtual.DelayedCall(0.2f, FinishDeath).SetLink(gameObject);
+    }
+
+    private void FinishDeath()
+    {
+      Instantiate(_deathVfx, transform.position, Quaternion.identity);
       Destroy(gameObject);
     }
   }

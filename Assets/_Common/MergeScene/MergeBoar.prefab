@@ -1945,6 +1945,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6573203073187926731}
   - component: {fileID: 6573203073187926730}
+  - component: {fileID: 6187665191357905594}
   m_Layer: 0
   m_Name: MergeBoar
   m_TagString: Untagged
@@ -1980,6 +1981,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184ac70cfd114d50a468f04c1e1e97bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 5364902633696686635}
+  _animator: {fileID: 6187665191357905594}
   _mesh: {fileID: 5364902633700953323}
   _highlightMaterial: {fileID: 2100000, guid: 1a31c7a81f45cca4fb8af3bafabc40db, type: 2}
+--- !u!114 &6187665191357905594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6573203073187926733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178ea8b3ae6d4560930719e645887f63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 5364902633696686635}

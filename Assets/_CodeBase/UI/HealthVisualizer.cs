@@ -9,16 +9,23 @@ namespace _CodeBase.UI
   public class HealthVisualizer : MonoBehaviour
   {
     [SerializeField] private Health _health;
-    [SerializeField] private Image _image;
+    [SerializeField] private GameObject _visual;
+    [SerializeField] private Image _fill;
 
     private void OnEnable() => _health.HealthAmountChanged += OnHealthAmountChange;
     private void OnDisable() => _health.HealthAmountChanged -= OnHealthAmountChange;
 
     private void OnHealthAmountChange(int currentValue)
     {
+      if (currentValue == 0)
+      {
+        _visual.SetActive(false);
+        return;
+      }
+      
       float newFillAmount = Mathf.InverseLerp(0, _health.MaxValue, currentValue);
-      _image.DOKill();
-      _image.DOFillAmount(newFillAmount, 0.2f).SetLink(gameObject);
+      _fill.DOKill();
+      _fill.DOFillAmount(newFillAmount, 0.2f).SetLink(gameObject);
     }
   }
 }

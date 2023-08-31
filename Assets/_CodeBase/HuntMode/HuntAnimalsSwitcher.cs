@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using _CodeBase.HuntMode.HuntCamerasCode;
 using _CodeBase.HuntMode.Launcher;
 using _CodeBase.HuntMode.PreyCode;
 using _CodeBase.HuntMode.Settings;
@@ -10,20 +11,18 @@ namespace _CodeBase.HuntMode
 {
   public class HuntAnimalsSwitcher : MonoBehaviour
   {
-    [SerializeField] private HuntCamera _camera;
+    [SerializeField] private HuntCamerasSwitcher _camerasSwitcher;
     [SerializeField] private AnimalsLauncher _animalsLauncher;
     [SerializeField] private List<HuntAnimal> _huntAnimals;
     [Space(10)]
     [SerializeField] private HuntGlobalAnimalSettings _settings;
 
     private PathsManager _pathsManager;
-    private Prey _prey;
     
     [Inject]
-    private void Construct(PathsManager pathsManager, Prey prey)
+    private void Construct(PathsManager pathsManager)
     {
       _pathsManager = pathsManager;
-      _prey = prey;
     }
 
     private void Start()
@@ -43,7 +42,7 @@ namespace _CodeBase.HuntMode
     private void SelectAnimal(int animalIndex)
     {
       HuntAnimal animal = _huntAnimals[animalIndex];
-      _camera.SetTarget(animal.transform, _prey.transform);
+      _camerasSwitcher.SetTarget(animal.transform);
       _animalsLauncher.SetLaunchingAnimal(animal);
       animal.Landed += OnAnimalLand;
     }

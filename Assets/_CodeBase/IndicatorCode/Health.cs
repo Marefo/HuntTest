@@ -22,7 +22,6 @@ namespace _CodeBase.IndicatorCode
     protected override void ChangeValue(int value)
     {
       base.ChangeValue(value);
-      Debug.Log($"current health = {CurrentValue}");
       HealthAmountChanged?.Invoke(CurrentValue);
     }
   }

@@ -1422,6 +1422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3410709938421055695}
   - component: {fileID: 3410709938421055694}
+  - component: {fileID: 5042273863757148633}
   m_Layer: 0
   m_Name: MergeFox
   m_TagString: Untagged
@@ -1457,6 +1458,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184ac70cfd114d50a468f04c1e1e97bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 834018423877614444}
+  _animator: {fileID: 5042273863757148633}
   _mesh: {fileID: 834018423873389996}
   _highlightMaterial: {fileID: 2100000, guid: 7b4e43f0f067a564699f0a3a0a58ab35, type: 2}
+--- !u!114 &5042273863757148633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3410709938421055689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 178ea8b3ae6d4560930719e645887f63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 834018423877614444}
