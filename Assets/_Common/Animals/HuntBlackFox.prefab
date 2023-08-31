@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5064799493366441659}
   - component: {fileID: 5064799493366441656}
   - component: {fileID: 5064799493366441657}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HuntBlackFox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,9 +48,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298b2aa96fff4bfb8c6906379b197c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
   _hitPreyVfx: {fileID: 4716493292860912708, guid: b3e4ecff39d2b194691616f7ef3fdf54, type: 3}
   _hitGroundVfx: {fileID: 4148484883548238310, guid: 35f2261704c3d3b48b077b9f17c41d82, type: 3}
   _rigidbody: {fileID: 5064799493366441656}
