@@ -6,6 +6,7 @@ namespace _CodeBase.Infrastructure.Services
   public class SavesService
   {
     public readonly string MergeFieldDataFileName = "MergeFieldData.json";
+    public readonly string MeatDataFileName = "MeatData.json";
     
     public void Save<T>(T saveObj, string fileName)
     {

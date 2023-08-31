@@ -1,6 +1,8 @@
 ﻿using System;
+using _CodeBase.HuntMode.PreyCode.Settings;
 using _CodeBase.HuntMode.Settings;
 using _CodeBase.IndicatorCode;
+using _CodeBase.Infrastructure;
 using _CodeBase.Logic;
 using DG.Tweening;
 using NaughtyAttributes;
@@ -11,21 +13,23 @@ namespace _CodeBase.HuntMode.PreyCode
 {
   public class Prey : MonoBehaviour
   {
-    [SerializeField] private int _startDistance;
     [SerializeField] private AnimalPathFollower _follower;
     [SerializeField] private Health _health; 
     [SerializeField] private AnimalAnimator _animalAnimator;
     [Space(10)]
     [SerializeField] private ParticleSystem _deathVfx;
     [Space(10)]
-    [SerializeField] private HuntGlobalAnimalSettings _settings;
+    [SerializeField] private HuntGlobalAnimalSettings _globalSettings;
+    [SerializeField] private PreySettings _settings;
 
     private PathsManager _pathsManager;
+    private HuntModeGameState _gameState;
     
     [Inject]
-    private void Construct(PathsManager pathsManager)
+    private void Construct(PathsManager pathsManager, HuntModeGameState gameState)
     {
       _pathsManager = pathsManager;
+      _gameState = gameState;
     }
     
     private void Awake() => SetUpPathFollower();
@@ -34,14 +38,18 @@ namespace _CodeBase.HuntMode.PreyCode
 
     private void OnDisable() => _health.ValueCameToZero -= Die;
 
-    public void ReceiveDamage(int damage) => _health.Decrease(damage);
+    public int OnHuntAnimalBite(int damage)
+    {
+      _health.Decrease(damage);
+      return _settings.MeatPerHit;
+    }
 
     private void SetUpPathFollower()
     {
       Path path = _pathsManager.GetMiddlePath();
       _follower.SetPath(path.PathCreator);
-      _follower.SetStartDistance(_startDistance);
-      _follower.SetMoveSpeed(_settings.MoveSpeed);
+      _follower.SetStartDistance(_settings.StartDistance);
+      _follower.SetMoveSpeed(_globalSettings.MoveSpeed);
       path.Take();
     }
 
@@ -55,6 +63,7 @@ namespace _CodeBase.HuntMode.PreyCode
     private void FinishDeath()
     {
       Instantiate(_deathVfx, transform.position, Quaternion.identity);
+      _gameState.Finish();
       Destroy(gameObject);
     }
   }

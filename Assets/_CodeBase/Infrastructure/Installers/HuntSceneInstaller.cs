@@ -12,6 +12,7 @@ namespace _CodeBase.Infrastructure.Installers
     
     public override void InstallBindings()
     {
+      Container.Bind<HuntModeGameState>().AsSingle().NonLazy();
       Container.Bind<Prey>().FromFactory<PreyFactory>();
       BindPathsManager();
     }

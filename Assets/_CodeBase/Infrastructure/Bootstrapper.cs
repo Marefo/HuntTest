@@ -39,8 +39,7 @@ namespace _CodeBase.Infrastructure
         Application.targetFrameRate = 60;
         MarkAsBootstrapped();
         _indestructibleObjects.ForEach(DontDestroyOnLoad);
-        //_sceneService.LoadScene(_sceneService.MergeSceneName);
-        _sceneService.LoadScene(_sceneService.HuntSceneName);
+        _sceneService.LoadScene(_sceneService.MergeSceneName);
       }
       else if (IsBootstrapped() == false) 
         _sceneService.LoadScene(_sceneService.BootstrapSceneName);

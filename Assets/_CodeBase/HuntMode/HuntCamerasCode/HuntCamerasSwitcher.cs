@@ -25,6 +25,14 @@ namespace _CodeBase.HuntMode.HuntCamerasCode
         ActivateNewCameraForTarget(_camera2, _camera1, target);
     }
 
+    public void ChangeActiveCameraLookAtTarget(Transform target)
+    {
+      if(_camera1.Active)
+        _camera1.SetLookAtTarget(target);
+      else
+        _camera2.SetLookAtTarget(target);
+    }
+
     private void ActivateNewCameraForTarget(HuntCamera oldCamera, HuntCamera newCamera, Transform target)
     {
       newCamera.SetFollowTarget(target);

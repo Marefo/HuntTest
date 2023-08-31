@@ -5,7 +5,7 @@ using Zenject;
 
 namespace _CodeBase.UI.Buttons
 {
-  public class PlayBtn : ButtonUI
+  public class MergeModePlayBtn : ButtonUI
   {
     private SceneService _sceneService;
     private Field _field;

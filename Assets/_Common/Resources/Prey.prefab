@@ -127,12 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28fcd2d34ab942e3af3117afb9f21575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startDistance: 3
   _follower: {fileID: 2684399644230745276}
   _health: {fileID: 5249967891477645078}
   _animalAnimator: {fileID: 99211654828867328}
   _deathVfx: {fileID: 4148484883548238310, guid: 35f2261704c3d3b48b077b9f17c41d82, type: 3}
-  _settings: {fileID: 11400000, guid: ddaf36c6e31dbbf44b3988d64d67f54d, type: 2}
+  _globalSettings: {fileID: 11400000, guid: ddaf36c6e31dbbf44b3988d64d67f54d, type: 2}
+  _settings: {fileID: 11400000, guid: 708b38ab21039164eb6b1bee91158169, type: 2}
 --- !u!114 &2684399644230745276
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,5 +1,7 @@
 ﻿using System;
+using _CodeBase.HuntMode.HuntCamerasCode;
 using _CodeBase.HuntMode.Launcher.Settings;
+using _CodeBase.Infrastructure;
 using _CodeBase.Infrastructure.Services;
 using UnityEngine;
 using Zenject;
@@ -8,6 +10,8 @@ namespace _CodeBase.HuntMode.Launcher
 {
   public class AnimalsLauncher : MonoBehaviour
   {
+    [SerializeField] private HuntCamerasSwitcher _camerasSwitcher;
+    [Space(10)]
     [SerializeField] private Transform _aimTopPoint;
     [SerializeField] private Transform _aimTargetPoint;
     [Space(10)]
@@ -18,16 +22,19 @@ namespace _CodeBase.HuntMode.Launcher
     private float _gravity => Physics.gravity.y;
 
     private InputService _inputService;
+    private HuntModeGameState _gameState;
     private Vector3 _inputForce;
     private bool _isTouching;
     private Vector3 _touchStartPosition;
     private Vector3 _shootDirection;
     private HuntAnimal _launchingAnimal;
+    private bool _enabled;
 
     [Inject]
-    private void Construct(InputService inputService)
+    private void Construct(InputService inputService, HuntModeGameState gameState)
     {
       _inputService = inputService;
+      _gameState = gameState;
     }
     
     private void Awake()
@@ -41,6 +48,7 @@ namespace _CodeBase.HuntMode.Launcher
       _inputService.TouchEntered += StartAiming;
       _inputService.TouchCanceled += FinishAiming;
       _inputService.Disabled += ResetAiming;
+      _gameState.LevelFinished += OnLevelFinish;
     }
 
     private void OnDisable()
@@ -48,6 +56,7 @@ namespace _CodeBase.HuntMode.Launcher
       _inputService.TouchEntered -= StartAiming;
       _inputService.TouchCanceled -= FinishAiming;
       _inputService.Disabled -= ResetAiming;
+      _gameState.LevelFinished -= OnLevelFinish;
     }
 
     private void FixedUpdate() => TakeAim();
@@ -56,7 +65,10 @@ namespace _CodeBase.HuntMode.Launcher
     {
       ResetAiming();
       _launchingAnimal = launchingAnimal;
+      _enabled = true;
     }
+
+    private void OnLevelFinish(int obj) => enabled = false;
 
     private void TakeAim()
     {
@@ -75,6 +87,8 @@ namespace _CodeBase.HuntMode.Launcher
 
     private void StartAiming()
     {
+      if(_enabled == false) return;
+      _enabled = false;
       _isTouching = true;
       ChangeAimTargetVisibility(true);
       _touchStartPosition = _inputService.TouchPosition;
@@ -86,6 +100,7 @@ namespace _CodeBase.HuntMode.Launcher
       
       ResetAiming();
       Vector3 initialVelocity = CalculateLaunchData().InitialVelocity;
+      _camerasSwitcher.ChangeActiveCameraLookAtTarget((_launchingAnimal.transform));
       _launchingAnimal.Launch(initialVelocity);
     }
 
