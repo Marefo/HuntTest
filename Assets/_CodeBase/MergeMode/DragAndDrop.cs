@@ -146,6 +146,6 @@ namespace _CodeBase.MergeMode
       return cell;
     }
     
-    private Ray GetRayFromTouch() => _mainCamera.ScreenPointToRay(Input.mousePosition);
+    private Ray GetRayFromTouch() => _mainCamera.ScreenPointToRay(_inputService.TouchPosition);
   }
 }

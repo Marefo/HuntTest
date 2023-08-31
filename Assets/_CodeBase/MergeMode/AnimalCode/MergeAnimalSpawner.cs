@@ -11,7 +11,7 @@ namespace _CodeBase.MergeMode.AnimalCode
     public MergeAnimal SpawnAnimal(Cell cell, int lvl)
     {
       AnimalData animalData = _animalsData.GetAnimalByLvl(lvl);
-      MergeAnimal animal = Instantiate(animalData.Prefab);
+      MergeAnimal animal = Instantiate(animalData.MergePrefab);
       animal.Initialize(animalData.Lvl, animalData.Offset);
       cell.SetAnimal(animal);
       animal.transform.DOKill();

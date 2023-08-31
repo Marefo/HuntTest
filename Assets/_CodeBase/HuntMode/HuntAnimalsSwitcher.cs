@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using _CodeBase.HuntMode.Launcher;
+using _CodeBase.HuntMode.PreyCode;
 using _CodeBase.HuntMode.Settings;
 using UnityEngine;
 using Zenject;
 
 namespace _CodeBase.HuntMode
 {
-  public class HuntAnimalsManager : MonoBehaviour
+  public class HuntAnimalsSwitcher : MonoBehaviour
   {
     [SerializeField] private HuntCamera _camera;
+    [SerializeField] private AnimalsLauncher _animalsLauncher;
     [SerializeField] private List<HuntAnimal> _huntAnimals;
     [Space(10)]
     [SerializeField] private HuntGlobalAnimalSettings _settings;
@@ -41,12 +44,13 @@ namespace _CodeBase.HuntMode
     {
       HuntAnimal animal = _huntAnimals[animalIndex];
       _camera.SetTarget(animal.transform, _prey.transform);
-      animal.Jumped += OnAnimalJump;
+      _animalsLauncher.SetLaunchingAnimal(animal);
+      animal.Landed += OnAnimalLand;
     }
 
-    private void OnAnimalJump(HuntAnimal animal)
+    private void OnAnimalLand(HuntAnimal animal)
     {
-      animal.Jumped -= OnAnimalJump;
+      animal.Landed -= OnAnimalLand;
       int animalIndex = _huntAnimals.IndexOf(animal);
       bool isLastAnimal = animalIndex == _huntAnimals.Count - 1;
 
